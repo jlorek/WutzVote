@@ -9,7 +9,7 @@ namespace WutzVote
 		public string Url { get; set; }
 		public string BewID { get; set; }
 		public string Voting { get; set; }
-		public string Votes { get; set; } = "0";
+		public string Votes { get; set; }
 		public string Average { get; set; }
 
 		public string Rating
@@ -35,7 +35,11 @@ namespace WutzVote
 					return "Keine Bewertung";
 				}
 
-				displayValue = displayValue + $" - Votes: {Votes}";
+				if (!string.IsNullOrEmpty(Votes))
+				{
+					displayValue = displayValue + $" - Votes: {Votes}";
+				}
+
 				return displayValue;
 			}
 		}

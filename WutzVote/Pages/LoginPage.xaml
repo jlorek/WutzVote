@@ -4,9 +4,12 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:local="clr-namespace:WutzVote"
 	x:Class="WutzVote.LoginPage"
-	Title="Login">
+	Title="Login"
+	BackgroundColor="#525B52"
+	Opacity="50"
+	>
 	<ContentPage.Content>
-		<Grid BackgroundColor="#525B52">
+		<Grid>
 			<ActivityIndicator
 				IsVisible="{Binding Loading}"
 				Color="White"
@@ -14,9 +17,10 @@
 				IsRunning="true" />
 			<StackLayout
 				IsVisible="{Binding Loading, Converter={StaticResource InvertBool}}"
-				Spacing="20"
-				Padding="40">
-				<Image Source="{local:ImageResourceExtension WutzVote.Assets.Logo.png}" />
+				Margin="40,0"
+				Spacing="0,0,0,10">
+				<Image
+					Source="{local:ImageResourceExtension WutzVote.Assets.Logo.png}" />
 				<Entry
 					Placeholder="Festivalticker ID"
 					Text="{Binding Username}" />

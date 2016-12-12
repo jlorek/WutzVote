@@ -50,6 +50,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ImageResourceExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringListToCountConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\VotingToColorConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Festival.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Models\" />

@@ -16,7 +16,7 @@ namespace WutzVote
 	{
 		private const string YouTubeEmbedUrl = "https://www.youtube-nocookie.com/embed/{0}?rel=0&autoplay=1";
 
-		private const string SoundCloudEmbedUrl = "https://w.soundcloud.com/player/?url={0}"; // &auto_play=true
+		private const string SoundCloudEmbedUrl = "https://w.soundcloud.com/player/?url={0}&auto_play=true"; // &auto_play=true
 
 		private static Regex[] rxYouTube =
 		{
@@ -232,7 +232,7 @@ namespace WutzVote
 					string voteUrl = string.Format(
 						"index.php?site=user-bewerbungen&do=view&what=&bew_id={0}&v_bw_id={1}",
 						Band.BewID,
-						_sessionSettings.FestivalID);
+						_sessionSettings.Festival.ID);
 
 					IRestRequest request = new RestRequest(voteUrl, Method.POST);
 					request.AddParameter("vote_action", voting);

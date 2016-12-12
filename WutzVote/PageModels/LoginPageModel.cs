@@ -17,7 +17,7 @@ namespace WutzVote
 		public Command LoginCommand { get; set; }
 
 		private static readonly Regex rxBwId =
-			new Regex(@"v_bw_id=(?<id>\d+)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+			new Regex("v_bw_id=(?<v_bw_id>\\d+)\"\\s+title=\"(?<name>[^\"]+)\"", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
 		private readonly RestClient _restClient;
 		private readonly SessionSettings _sessionSettings;
@@ -34,11 +34,11 @@ namespace WutzVote
 		{
 			LoginCommand = new Command(async () =>
 			{
-				string festivalID = await Login();
+				Festival festival = await Login();
 
-				if (festivalID != null)
+				if (festival != null)
 				{
-					_sessionSettings.FestivalID = festivalID;
+					_sessionSettings.Festival = festival;
 					await CoreMethods.PushPageModel<BandsPageModel>();
 				}
 			});
@@ -47,34 +47,46 @@ namespace WutzVote
 		protected override void ViewIsAppearing(object sender, EventArgs e)
 		{
 			base.ViewIsAppearing(sender, e);
+			LoadLogin();
+		}
 
+		private void LoadLogin()
+		{
 			Username = Acr.Settings.Settings.Local.Get("Username", string.Empty);
 			Password = Acr.Settings.Settings.Local.Get("Password", string.Empty);
 		}
 
-		private async Task SaveLogin()
+		private async Task PromptSaveLogin()
 		{
-			if (Username == Acr.Settings.Settings.Local.Get("Username", string.Empty) &&
-				Password == Acr.Settings.Settings.Local.Get("Password", string.Empty))
+			if (LoginChanged())
 			{
-				// if user or password have not changed, dont's show the save question and continue
-				return;
-			}
+				bool saveLogin = await CoreMethods.DisplayAlert(
+					"WutzVote",
+					"Sollen deine Login Daten gespeichert werden?",
+					"Ja",
+					"Nein");
 
-			bool saveLogin = await CoreMethods.DisplayAlert(
-				"WutzVote",
-				"Sollen deine Login Daten gespeichert werden?",
-				"Ja",
-				"Nein");
-
-			if (saveLogin)
-			{
-				Acr.Settings.Settings.Local.Set("Username", Username);
-				Acr.Settings.Settings.Local.Set("Password", Password);
+				if (saveLogin)
+				{
+					SaveLogin();
+				}
 			}
 		}
 
-		private async Task<string> Login()
+		private bool LoginChanged()
+		{
+			return
+				(Username != Acr.Settings.Settings.Local.Get("Username", string.Empty) ||
+				 Password != Acr.Settings.Settings.Local.Get("Password", string.Empty));
+		}
+
+		private void SaveLogin()
+		{
+			Acr.Settings.Settings.Local.Set("Username", Username);
+			Acr.Settings.Settings.Local.Set("Password", Password);
+		}
+
+		private async Task<Festival> Login()
 		{
 			using (new LoadingContext(this))
 			{
@@ -91,23 +103,26 @@ namespace WutzVote
 					Encoding iso_8859_1 = Encoding.GetEncoding("iso-8859-1");
 					string html = iso_8859_1.GetString(response.RawBytes);
 
-					MatchCollection matches = rxBwId.Matches(html);
-
 					// bwId is the identifier for the Festival (eg. 17th Wutzdog)
-					int bwId = matches
+					Festival latest =
+						rxBwId.Matches(html)
 						.Cast<Match>()
-						.Select(m => int.Parse(m.Groups["id"].Value))
-						.DefaultIfEmpty(0)
-						.Max();
+						.Select(match => new Festival
+						{
+							ID = int.Parse(match.Groups["v_bw_id"].Value),
+							Name = match.Groups["name"].Value
+						})
+						.OrderByDescending(festival => festival.ID)
+					  	.FirstOrDefault();
 
-					if (bwId == 0)
+					if (latest == null)
 					{
 						throw new Exception("Festivalticker ID oder Passwort falsch. Versuche es noch einmal.");
 					}
 
-					await SaveLogin();
+					await PromptSaveLogin();
 
-					return Convert.ToString(bwId);
+					return latest;
 				}
 				catch (Exception ex)
 				{

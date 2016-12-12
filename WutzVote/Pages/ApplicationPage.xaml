@@ -4,6 +4,12 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	x:Class="WutzVote.ApplicationPage"
 	Title="{Binding Band.Name}">
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<Color
+				x:Key="ButtonBackground">#EEEEEE</Color>
+		</ResourceDictionary>
+	</ContentPage.Resources>
 	<ContentPage.Content>
 		<Grid>
 			<ActivityIndicator
@@ -40,7 +46,7 @@
 					<Button
 						Text="4"
 						BorderRadius="15"
-						BackgroundColor="{Binding Band.Voting, Converter={StaticResource VotingToColor}, ConverterParameter='4'}"			
+						BackgroundColor="{Binding Band.Voting, Converter={StaticResource VotingToColor}, ConverterParameter='4'}"
 						Command="{Binding VoteCommand}"
 						CommandParameter="4" />
 					<Button
@@ -58,24 +64,30 @@
 				</StackLayout>
 				<StackLayout
 					Orientation="Horizontal"
-					HorizontalOptions="Center">
+					HorizontalOptions="Center"
+					Margin="0,0,0,10"
+					Spacing="0,10">
 					<Button
 						IsVisible="{Binding Application.YouTubeUrls, Converter={StaticResource StringListToBool}}"
-						Text="{Binding Application.YouTubeUrls, Converter={StaticResource StringListToCount}, StringFormat='YouTube ({0})'}"
+						Text="{Binding Application.YouTubeButton}" 
+						BackgroundColor="{StaticResource ButtonBackground}"
 						Command="{Binding YouTubeCommand}" />
 					<Button
 						IsVisible="{Binding Application.SoundCloudUrl, Converter={StaticResource StringToBool}}"
-						Text="SoundCloud"
+						Text="  SoundCloud  "
+						BackgroundColor="{StaticResource ButtonBackground}"
 						Command="{Binding OpenWebsiteCommand}"
 						CommandParameter="{Binding Application.SoundCloudUrl}" />
 					<Button
 						IsVisible="{Binding Application.BandCampUrl, Converter={StaticResource StringToBool}}"
-						Text="BandCamp"
+						Text="  BandCamp  "
+						BackgroundColor="{StaticResource ButtonBackground}"
 						Command="{Binding OpenWebsiteCommand}"
 						CommandParameter="{Binding Application.BandCampUrl}" />
 					<Button
 						IsVisible="{Binding Application.YouTubeSearch, Converter={StaticResource StringToBool}}"
-						Text="Suchen"
+						Text="  Suchen  "
+						BackgroundColor="{StaticResource ButtonBackground}"
 						Command="{Binding OpenWebsiteCommand}"
 						CommandParameter="{Binding Application.YouTubeSearch}" />
 				</StackLayout>

@@ -3,6 +3,6 @@ namespace WutzVote
 {
 	public class SessionSettings
 	{
-		public string FestivalID { get; set; }
+		public Festival Festival { get; set; }
 	}
 }

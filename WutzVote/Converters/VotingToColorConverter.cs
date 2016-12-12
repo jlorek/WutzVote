@@ -19,7 +19,7 @@ namespace WutzVote.Converters
 				}
 			}
 
-			return Color.FromHex("#000000FF");
+			return Color.FromHex("#EEEEEE");
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

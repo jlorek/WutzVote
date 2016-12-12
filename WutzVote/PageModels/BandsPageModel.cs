@@ -6,12 +6,16 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
+using PropertyChanged;
 
 namespace WutzVote
 {
+	[ImplementPropertyChanged]
 	public class BandsPageModel : BasePageModel
 	{
 		public ObservableCollection<Band> Bands { get; set; } = new ObservableCollection<Band>();
+
+		public string Name { get; set; }
 
 		public Band Selected
 		{
@@ -43,6 +47,8 @@ namespace WutzVote
 		{
 			_sessionSettings = sessionSettings;
 			_restClient = restClient;
+
+			Name = sessionSettings.Festival.Name;
 		}
 
 		public override async void Init(object initData)
@@ -65,7 +71,7 @@ namespace WutzVote
 					{
 						string listUrl = string.Format(
 							"index.php?site=user-bewerbungen&v_bw_id={0}&start={1}",
-							_sessionSettings.FestivalID,
+							_sessionSettings.Festival.ID,
 							page);
 
 						RestRequest request = new RestRequest(listUrl, Method.GET);

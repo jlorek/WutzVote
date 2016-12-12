@@ -5,6 +5,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "WutzVote", "WutzVote\WutzVo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WutzVote.iOS", "iOS\WutzVote.iOS.csproj", "{6CCF0969-C3F2-4FAF-AAAA-CEBBAE43FB80}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WutzVote.Droid", "Droid\WutzVote.Droid.csproj", "{189812EA-84AB-4495-A222-1B8B585DC7A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|iPhoneSimulator = Debug|iPhoneSimulator
@@ -21,5 +23,13 @@ Global
 		{6CCF0969-C3F2-4FAF-AAAA-CEBBAE43FB80}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{6CCF0969-C3F2-4FAF-AAAA-CEBBAE43FB80}.Debug|iPhone.ActiveCfg = Debug|iPhone
 		{6CCF0969-C3F2-4FAF-AAAA-CEBBAE43FB80}.Debug|iPhone.Build.0 = Debug|iPhone
+		{189812EA-84AB-4495-A222-1B8B585DC7A1}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{189812EA-84AB-4495-A222-1B8B585DC7A1}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{189812EA-84AB-4495-A222-1B8B585DC7A1}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{189812EA-84AB-4495-A222-1B8B585DC7A1}.Release|iPhone.Build.0 = Release|Any CPU
+		{189812EA-84AB-4495-A222-1B8B585DC7A1}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{189812EA-84AB-4495-A222-1B8B585DC7A1}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{189812EA-84AB-4495-A222-1B8B585DC7A1}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{189812EA-84AB-4495-A222-1B8B585DC7A1}.Debug|iPhone.Build.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal

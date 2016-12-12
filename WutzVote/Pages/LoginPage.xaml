@@ -5,9 +5,7 @@
 	xmlns:local="clr-namespace:WutzVote"
 	x:Class="WutzVote.LoginPage"
 	Title="Login"
-	BackgroundColor="#525B52"
-	Opacity="50"
-	>
+	BackgroundColor="#525B52">
 	<ContentPage.Content>
 		<Grid>
 			<ActivityIndicator

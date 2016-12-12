@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:converters="clr-namespace:WutzVote.Converters"
+	x:Class="WutzVote.App">
+	<Application.Resources>
+		<ResourceDictionary>
+			<converters:InvertBoolConverter
+				x:Key="InvertBool" />
+			<converters:StringToBoolConverter
+				x:Key="StringToBool" />
+			<converters:StringListToBoolConverter
+				x:Key="StringListToBool" />
+			<converters:StringListToCountConverter
+				x:Key="StringListToCount" />
+			<converters:VotingToColorConverter
+				x:Key="VotingToColor" />
+		</ResourceDictionary>
+	</Application.Resources>
+</Application>

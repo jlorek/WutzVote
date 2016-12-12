@@ -1,0 +1,25 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "WutzVote", "WutzVote\WutzVote.shproj", "{106C632B-7814-4909-8B88-A0AC1145F3E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WutzVote.iOS", "iOS\WutzVote.iOS.csproj", "{6CCF0969-C3F2-4FAF-AAAA-CEBBAE43FB80}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhone = Release|iPhone
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6CCF0969-C3F2-4FAF-AAAA-CEBBAE43FB80}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{6CCF0969-C3F2-4FAF-AAAA-CEBBAE43FB80}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{6CCF0969-C3F2-4FAF-AAAA-CEBBAE43FB80}.Release|iPhone.ActiveCfg = Release|iPhone
+		{6CCF0969-C3F2-4FAF-AAAA-CEBBAE43FB80}.Release|iPhone.Build.0 = Release|iPhone
+		{6CCF0969-C3F2-4FAF-AAAA-CEBBAE43FB80}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{6CCF0969-C3F2-4FAF-AAAA-CEBBAE43FB80}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{6CCF0969-C3F2-4FAF-AAAA-CEBBAE43FB80}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{6CCF0969-C3F2-4FAF-AAAA-CEBBAE43FB80}.Debug|iPhone.Build.0 = Debug|iPhone
+	EndGlobalSection
+EndGlobal

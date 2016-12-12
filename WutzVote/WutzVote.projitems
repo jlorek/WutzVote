@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>{106C632B-7814-4909-8B88-A0AC1145F3E2}</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>WutzVote</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)App.xaml" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Pages\LoginPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Pages\BandsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Pages\ApplicationPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\Logo.png">
+      <LogicalName>WutzVote.Assets.Logo.png</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Band.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)PageModels\LoginPageModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\SessionSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\BandsPage.xaml.cs">
+      <DependentUpon>BandsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)PageModels\BandsPageModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\BandApplication.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PageModels\BasePageModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\LoadingContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\ApplicationPage.xaml.cs">
+      <DependentUpon>ApplicationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)PageModels\ApplicationPageModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\StringToBoolConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\StringListToBoolConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\InvertBoolConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ImageResourceExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\StringListToCountConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\VotingToColorConverter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Models\" />
+    <Folder Include="$(MSBuildThisFileDirectory)PageModels\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Pages\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Utils\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Converters\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Assets\" />
+  </ItemGroup>
+</Project>

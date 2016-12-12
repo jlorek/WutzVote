@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:local="clr-namespace:WutzVote"
+	x:Class="WutzVote.LoginPage"
+	Title="Login">
+	<ContentPage.Content>
+		<Grid BackgroundColor="#525B52">
+			<ActivityIndicator
+				IsVisible="{Binding Loading}"
+				Color="White"
+				IsEnabled="true"
+				IsRunning="true" />
+			<StackLayout
+				IsVisible="{Binding Loading, Converter={StaticResource InvertBool}}"
+				Spacing="20"
+				Padding="40">
+				<Image Source="{local:ImageResourceExtension WutzVote.Assets.Logo.png}" />
+				<Entry
+					Placeholder="Festivalticker ID"
+					Text="{Binding Username}" />
+				<Entry
+					Placeholder="Passwort"
+					Text="{Binding Password}"
+					IsPassword="true" />
+				<Button
+					Text="Login"
+					BackgroundColor="#E0F3C3"
+					Command="{Binding LoginCommand}" />
+			</StackLayout>
+		</Grid>
+	</ContentPage.Content>
+</ContentPage>

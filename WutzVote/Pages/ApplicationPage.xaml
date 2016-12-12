@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	x:Class="WutzVote.ApplicationPage"
+	Title="{Binding Band.Name}">
+	<ContentPage.Content>
+		<Grid>
+			<ActivityIndicator
+				IsVisible="{Binding Loading}"
+				IsEnabled="true"
+				IsRunning="true" />
+			<StackLayout
+				IsVisible="{Binding Loading, Converter={StaticResource InvertBool}}">
+				<WebView
+					Source="{Binding WebUrl}"
+					HorizontalOptions="FillAndExpand"
+					VerticalOptions="FillAndExpand" />
+				<StackLayout
+					Orientation="Horizontal"
+					HorizontalOptions="Center">
+					<Button
+						Text="1"
+						BorderRadius="15"
+						BackgroundColor="{Binding Band.Voting, Converter={StaticResource VotingToColor}, ConverterParameter='1'}"
+						Command="{Binding VoteCommand}"
+						CommandParameter="1" />
+					<Button
+						Text="2"
+						BorderRadius="15"
+						BackgroundColor="{Binding Band.Voting, Converter={StaticResource VotingToColor}, ConverterParameter='2'}"
+						Command="{Binding VoteCommand}"
+						CommandParameter="2" />
+					<Button
+						Text="3"
+						BorderRadius="15"
+						BackgroundColor="{Binding Band.Voting, Converter={StaticResource VotingToColor}, ConverterParameter='3'}"
+						Command="{Binding VoteCommand}"
+						CommandParameter="3" />
+					<Button
+						Text="4"
+						BorderRadius="15"
+						BackgroundColor="{Binding Band.Voting, Converter={StaticResource VotingToColor}, ConverterParameter='4'}"			
+						Command="{Binding VoteCommand}"
+						CommandParameter="4" />
+					<Button
+						Text="5"
+						BorderRadius="15"
+						BackgroundColor="{Binding Band.Voting, Converter={StaticResource VotingToColor}, ConverterParameter='5'}"
+						Command="{Binding VoteCommand}"
+						CommandParameter="5" />
+					<Button
+						Text="6"
+						BorderRadius="15"
+						BackgroundColor="{Binding Band.Voting, Converter={StaticResource VotingToColor}, ConverterParameter='6'}"
+						Command="{Binding VoteCommand}"
+						CommandParameter="6" />
+				</StackLayout>
+				<StackLayout
+					Orientation="Horizontal"
+					HorizontalOptions="Center">
+					<Button
+						IsVisible="{Binding Application.YouTubeUrls, Converter={StaticResource StringListToBool}}"
+						Text="{Binding Application.YouTubeUrls, Converter={StaticResource StringListToCount}, StringFormat='YouTube ({0})'}"
+						Command="{Binding YouTubeCommand}" />
+					<Button
+						IsVisible="{Binding Application.SoundCloudUrl, Converter={StaticResource StringToBool}}"
+						Text="SoundCloud"
+						Command="{Binding OpenWebsiteCommand}"
+						CommandParameter="{Binding Application.SoundCloudUrl}" />
+					<Button
+						IsVisible="{Binding Application.BandCampUrl, Converter={StaticResource StringToBool}}"
+						Text="BandCamp"
+						Command="{Binding OpenWebsiteCommand}"
+						CommandParameter="{Binding Application.BandCampUrl}" />
+					<Button
+						IsVisible="{Binding Application.YouTubeSearch, Converter={StaticResource StringToBool}}"
+						Text="Suchen"
+						Command="{Binding OpenWebsiteCommand}"
+						CommandParameter="{Binding Application.YouTubeSearch}" />
+				</StackLayout>
+			</StackLayout>
+		</Grid>
+	</ContentPage.Content>
+</ContentPage>

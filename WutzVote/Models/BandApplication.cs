@@ -1,9 +1,7 @@
 using System.Collections.Generic;
-using PropertyChanged;
 
 namespace WutzVote
 {
-	[ImplementPropertyChanged]
 	public class BandApplication : Band
 	{
 		public List<string> YouTubeUrls { get; set; } = new List<string>();

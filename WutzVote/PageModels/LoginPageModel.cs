@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using PropertyChanged;
 using RestSharp;
 using Xamarin.Forms;
 using System.Linq;
@@ -9,7 +8,6 @@ using System.Text;
 
 namespace WutzVote
 {
-	[ImplementPropertyChanged]
 	public class LoginPageModel : BasePageModel
 	{
 		public string Username { get; set; }

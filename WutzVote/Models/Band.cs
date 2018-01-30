@@ -1,10 +1,11 @@
-﻿using PropertyChanged;
+﻿using System.ComponentModel;
 
 namespace WutzVote
 {
-	[ImplementPropertyChanged]
-	public class Band
+    public class Band : INotifyPropertyChanged
 	{
+        public event PropertyChangedEventHandler PropertyChanged;
+
 		public string Name { get; set; }
 		public string Url { get; set; }
 		public string BewID { get; set; }

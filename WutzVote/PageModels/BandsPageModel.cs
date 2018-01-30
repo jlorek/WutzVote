@@ -6,11 +6,9 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
-using PropertyChanged;
 
 namespace WutzVote
 {
-	[ImplementPropertyChanged]
 	public class BandsPageModel : BasePageModel
 	{
 		public ObservableCollection<Band> Bands { get; set; } = new ObservableCollection<Band>();
@@ -29,7 +27,7 @@ namespace WutzVote
 		}
 
 		private static Regex rxBand =
-			new Regex("class=\"small\"><a href=\"(?<url>[^\"]+)\"\\s+>(?<name>[^<]+)<\\/a>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            new Regex("width:93%\"><a href=\"(?<url>[^\"]+)\"\\s+>(?<name>[^<]+)<\\/a>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
 		private static Regex rxBandEnd =
 			new Regex("</tr>", RegexOptions.Compiled | RegexOptions.IgnoreCase);

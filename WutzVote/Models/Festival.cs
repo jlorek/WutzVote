@@ -1,11 +1,11 @@
-﻿using System;
-using PropertyChanged;
+﻿using System.ComponentModel;
 
 namespace WutzVote
 {
-	[ImplementPropertyChanged]
-	public class Festival
+    public class Festival : INotifyPropertyChanged
 	{
+        public event PropertyChangedEventHandler PropertyChanged;
+
 		private static readonly Festival empty = new Festival { ID = 0, Name = string.Empty };
 
 		public static Festival Empty

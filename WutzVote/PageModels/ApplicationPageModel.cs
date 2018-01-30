@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using PropertyChanged;
 using RestSharp;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,7 +10,6 @@ using System.Text;
 
 namespace WutzVote
 {
-	[ImplementPropertyChanged]
 	public class ApplicationPageModel : BasePageModel
 	{
 		private const string YouTubeEmbedUrl = "https://www.youtube-nocookie.com/embed/{0}?rel=0&autoplay=1";

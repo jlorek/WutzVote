@@ -96,7 +96,7 @@ namespace WutzVote
 								string bewId = maBewId.Groups["id"].Value;
 
 								// make absolute url relative
-								url = url.Replace("http://www.festivalticker.de/my_account/", string.Empty);
+								url = url.Replace("https://www.festivalticker.de/my_account/", string.Empty);
 
 								string name = UnescapeString(maBand.Groups["name"].Value);
 

@@ -19,7 +19,7 @@ namespace WutzVote
 
 		void SetupIoC()
 		{
-			var restClient = new RestClient("http://www.festivalticker.de/my_account/");
+			var restClient = new RestClient("https://www.festivalticker.de/my_account/");
 			restClient.CookieContainer = new System.Net.CookieContainer();
 			FreshIOC.Container.Register<RestClient>(restClient);
 

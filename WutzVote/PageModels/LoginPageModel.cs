@@ -101,14 +101,14 @@ namespace WutzVote
 					Encoding iso_8859_1 = Encoding.GetEncoding("iso-8859-1");
 					string html = iso_8859_1.GetString(response.RawBytes);
 
-					// bwId is the identifier for the Festival (eg. 17th Wutzdog)
-					Festival latest =
-						rxBwId.Matches(html)
-						.Cast<Match>()
-						.Select(match => new Festival
-						{
-							ID = int.Parse(match.Groups["v_bw_id"].Value),
-							Name = match.Groups["name"].Value
+                    // bwId is the identifier for the Festival (eg. 17th Wutzdog)
+                    Festival latest =
+                        rxBwId.Matches(html)
+                        .Cast<Match>()
+                        .Select(match => new Festival
+                        {
+                            ID = int.Parse(match.Groups["v_bw_id"].Value),
+                            Name = match.Groups["name"].Value.Replace("Festival", string.Empty)
 						})
 						.OrderByDescending(festival => festival.ID)
 					  	.FirstOrDefault();

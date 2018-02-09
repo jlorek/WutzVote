@@ -10,51 +10,53 @@ using System.Text;
 
 namespace WutzVote
 {
-	public class ApplicationPageModel : BasePageModel
-	{
-		private const string YouTubeEmbedUrl = "https://www.youtube-nocookie.com/embed/{0}?rel=0&autoplay=1";
+    public class ApplicationPageModel : BasePageModel
+    {
+        private const string YouTubeEmbedUrl = "https://www.youtube-nocookie.com/embed/{0}?rel=0&autoplay=1";
 
-		private const string SoundCloudEmbedUrl = "https://w.soundcloud.com/player/?url={0}&auto_play=true"; // &auto_play=true
+        private const string SoundCloudEmbedUrl = "https://w.soundcloud.com/player/?url={0}&auto_play=true"; // &auto_play=true
 
-		private static Regex[] rxYouTube =
-		{
-			new Regex("\"(?<url>https?:\\/\\/(www\\.)?youtube\\.com\\/watch\\?v=(?<id>[^\"]+))\"", RegexOptions.Compiled | RegexOptions.IgnoreCase),
-			new Regex("\"(?<url>https?:\\/\\/youtu\\.be\\/(?<id>[^\"]+))\"", RegexOptions.Compiled | RegexOptions.IgnoreCase),
-			new Regex("\"(?<url>https?:\\/\\/(www\\.)?youtube\\.com\\/channel\\/[^\"]+)\"", RegexOptions.Compiled | RegexOptions.IgnoreCase)
-		};
+        private static Regex[] rxYouTube =
+        {
+            new Regex("\"(?<url>https?:\\/\\/(www\\.)?youtube\\.com\\/watch\\?v=(?<id>[^\"]+))\"", RegexOptions.Compiled | RegexOptions.IgnoreCase),
+            new Regex("\"(?<url>https?:\\/\\/youtu\\.be\\/(?<id>[^\"]+))\"", RegexOptions.Compiled | RegexOptions.IgnoreCase),
+            new Regex("\"(?<url>https?:\\/\\/(www\\.)?youtube\\.com\\/channel\\/[^\"]+)\"", RegexOptions.Compiled | RegexOptions.IgnoreCase)
+        };
 
-		private static Regex rxSoundCloud =
-			new Regex("\"(?<url>https?:\\/\\/(www\\.)?soundcloud\\.com\\/(?<name>[^\"]+))\"", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex rxSoundCloud =
+            new Regex("\"(?<url>https?:\\/\\/(www\\.)?soundcloud\\.com\\/(?<name>[^\"]+))\"", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-		private static Regex rxBandCamp =
-			new Regex("\"(?<url>https?:\\/\\/(www\\.)?(?<name>[^\\.]+)\\.bandcamp\\.com)\"", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-		//https://www.youtube.com/results?search_query=Geschichte-in-liedern
+        private static Regex rxBandCamp =
+            new Regex("\"(?<url>https?:\\/\\/(www\\.)?(?<name>[^\\.]+)\\.bandcamp\\.com)\"", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        //https://www.youtube.com/results?search_query=Geschichte-in-liedern
 
-		private static Regex rxYouTubeSearch =
-			new Regex("\"(?<url>https?:\\/\\/(www\\.)youtube.com/results\\?search_query=[^\"]+)\"", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex rxYouTubeSearch =
+            new Regex("\"(?<url>https?:\\/\\/(www\\.)youtube.com/results\\?search_query=[^\"]+)\"", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-		private static Regex rxVoting =
-			new Regex("value=\"(?<voting>\\d)\"\\s*selected", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex rxVoting =
+            new Regex("value=\"(?<voting>\\d)\"\\s*selected", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-		private static Regex rxAverage =
-			new Regex("&Oslash;\\s+(?<average>\\d\\.\\d)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex rxAverage =
+            new Regex("&Oslash;\\s+(?<average>\\d\\.\\d)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-		private static Regex rxVotes =
-			new Regex("(?<count>\\d)\\sUser\\sgevotet", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex rxVotes =
+            new Regex("(?<count>\\d)\\sUser\\sgevotet", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-		private int _youTubeIndex = 0;
+        private int _youTubeIndex = 0;
 
-		public Band Band { get; set; }
+        public Band Band { get; set; }
 
-		public BandApplication Application { get; set; }
+        public BandApplication Application { get; set; }
 
-		public string WebUrl { get; set; }
+        public string WebUrl { get; set; }
 
-		public Command YouTubeCommand { get; set; }
+        public Command YouTubeCommand { get; set; }
 
-		public Command VoteCommand { get; set; }
+        public Command VoteCommand { get; set; }
 
-		public Command OpenWebsiteCommand { get; set; }
+        public Command OpenWebsiteCommand { get; set; }
+
+        public Command CommentCommand { get; set; }
 
 		private readonly RestClient _restClient;
 
@@ -101,6 +103,11 @@ namespace WutzVote
 					WebUrl = url;
 				}
 			});
+
+            CommentCommand = new Command(async () =>
+            {
+                await CommentBand("WutzVote Markierung");
+            });
 		}
 
 		public override async void Init(object initData)
@@ -220,6 +227,39 @@ namespace WutzVote
 
 			return null;
 		}
+
+        private async Task CommentBand(string comment)
+        {
+            // URL: https://www.festivalticker.de/my_account/index.php?site=user-bewerbungen-neuer-kommentar&bew_id=282982&v_bw_id=2588&sp=0
+            // FORM_DATA: comment=wutzvote+test&submit=Senden
+            try
+            {
+                using (new LoadingContext(this))
+                {
+                    string voteUrl = string.Format(
+                        "index.php?site=user-bewerbungen-neuer-kommentar&do=view&what=&bew_id={0}&v_bw_id={1}&sp=0",
+                        Band.BewID,
+                        _sessionSettings.Festival.ID);
+
+                    IRestRequest request = new RestRequest(voteUrl, Method.POST);
+                    request.AddParameter("comment", comment);
+                    request.AddParameter("submit", "Senden");
+
+                    IRestResponse response = await _restClient.ExecuteTaskAsync(request);
+                    Encoding iso_8859_1 = Encoding.GetEncoding("iso-8859-1");
+                    string html = iso_8859_1.GetString(response.RawBytes);
+
+                    if (!html.Contains(comment))
+                    {
+                        await CoreMethods.DisplayAlert("Fehler", "Dein Kommentar konnte leider nicht gesendet werden.", "Schade...");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                await CoreMethods.DisplayAlert("Error", ex.Message, "OK");
+            }
+        }
 
 		private async Task VoteBand(string voting)
 		{

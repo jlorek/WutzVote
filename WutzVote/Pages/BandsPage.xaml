@@ -10,18 +10,28 @@
 				IsVisible="{Binding Loading}"
 				IsEnabled="true"
 				IsRunning="true" />
-			<ListView
-				IsVisible="{Binding Loading, Converter={StaticResource InvertBool}}"
-				ItemsSource="{Binding Bands}"
-				SelectedItem="{Binding Selected}">
-				<ListView.ItemTemplate>
-					<DataTemplate>
-						<TextCell
-							Text="{Binding Name}"
-							Detail="{Binding Rating}" />
-					</DataTemplate>
-				</ListView.ItemTemplate>
-			</ListView>
+            <StackLayout
+                IsVisible="{Binding Loading, Converter={StaticResource InvertBool}}">
+                <!--
+                x:Name="SearchBar"
+                SearchCommand="{Binding SearchCommand}"
+                SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}}"
+                -->
+                <SearchBar
+                    Text="{Binding SearchTerm}"
+                />
+                <ListView
+    				ItemsSource="{Binding Bands}"
+    				SelectedItem="{Binding Selected}">
+    				<ListView.ItemTemplate>
+    					<DataTemplate>
+    						<TextCell
+    							Text="{Binding Name}"
+    							Detail="{Binding Rating}" />
+    					</DataTemplate>
+    				</ListView.ItemTemplate>
+    			</ListView>
+            </StackLayout>
 		</Grid>
 	</ContentPage.Content>
 </ContentPage>

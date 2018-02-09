@@ -6,11 +6,15 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
+using Xamarin.Forms;
+using System.Collections.Generic;
 
 namespace WutzVote
 {
 	public class BandsPageModel : BasePageModel
 	{
+        public List<Band> AllBands = new List<Band>();
+
 		public ObservableCollection<Band> Bands { get; set; } = new ObservableCollection<Band>();
 
 		public string Name { get; set; }
@@ -25,6 +29,14 @@ namespace WutzVote
 				}
 			}
 		}
+
+        public string SearchTerm
+        {
+            set
+            {
+                Filter(value);
+            }
+        }
 
 		private static Regex rxBand =
             new Regex("width:93%\"><a href=\"(?<url>[^\"]+)\"\\s+>(?<name>[^<]+)<\\/a>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
@@ -41,13 +53,44 @@ namespace WutzVote
 		private readonly RestClient _restClient;
 		private readonly SessionSettings _sessionSettings;
 
+        public Command<string> SearchCommand { get; set; }
+
 		public BandsPageModel(RestClient restClient, SessionSettings sessionSettings)
 		{
 			_sessionSettings = sessionSettings;
 			_restClient = restClient;
 
 			Name = sessionSettings.Festival.Name;
+
+            SetupCommands();
 		}
+
+        private void SetupCommands()
+        {
+            SearchCommand = new Command<string>((string term) =>
+            {
+                Bands.Clear();
+                foreach (var band in AllBands)
+                {
+                    if (band.Name.Contains(term))
+                    {
+                        Bands.Add(band);
+                    }
+                }
+            });
+        }
+
+        private void Filter(string searchTerm)
+        {
+            Bands.Clear();
+            foreach (var band in AllBands)
+            {
+                if (string.IsNullOrEmpty(searchTerm) || band.Name.Contains(searchTerm))
+                {
+                    Bands.Add(band);
+                }
+            }
+        }
 
 		public override async void Init(object initData)
 		{
@@ -116,18 +159,23 @@ namespace WutzVote
 								};
 
 								// when we found a reoccuring band, we have reached the end
-								if (Bands.Any(b => b.Url.Equals(band.Url)))
+                                if (AllBands.Any(b => b.Url.Equals(band.Url)))
 								{
 									newBandFound = false;
 									break;
 								}
 
-								Bands.Add(band);
+                                AllBands.Add(band);
 							}
 						}
 
 						page++;
 					}
+
+                    foreach (var band in AllBands)
+                    {
+                        Bands.Add(band);
+                    }
 				}
 			}
 			catch (Exception ex)

@@ -90,6 +90,10 @@
 						BackgroundColor="{StaticResource ButtonBackground}"
 						Command="{Binding OpenWebsiteCommand}"
 						CommandParameter="{Binding Application.YouTubeSearch}" />
+                    <Button
+                        Text="  Markieren  "
+                        BackgroundColor="{StaticResource ButtonBackground}"
+                        Command="{Binding CommentCommand}" />
 				</StackLayout>
 			</StackLayout>
 		</Grid>

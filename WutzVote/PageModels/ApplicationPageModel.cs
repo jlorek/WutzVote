@@ -106,11 +106,34 @@ namespace WutzVote
 
             CommentCommand = new Command(async () =>
             {
-                await CommentBand("WutzVote Markierung");
+                string comment = await GetComment();
+                if (!string.IsNullOrEmpty(comment))
+                {
+                    await CommentBand(comment);
+                }
             });
 		}
 
-		public override async void Init(object initData)
+        private async Task<string> GetComment()
+        {
+            const string cancel = "Abbrechen";
+
+            string[] values = {
+                "Holy Shit!",
+                "Der Oberhammer!",
+                "Beste Band!",
+                "Geht schon ab!",
+                "Joa, ganz okay.",
+                "Was ein Abfall..."
+            };
+            
+            string comment = await CoreMethods.DisplayActionSheet(
+                "WutzVote", cancel, null, values);
+
+            return (comment == cancel) ? null : comment;
+        }
+
+        public override async void Init(object initData)
 		{
 			base.Init(initData);
 
@@ -253,6 +276,8 @@ namespace WutzVote
                     {
                         await CoreMethods.DisplayAlert("Fehler", "Dein Kommentar konnte leider nicht gesendet werden.", "Schade...");
                     }
+
+                    await CoreMethods.DisplayAlert("WutzVote", "Dein Kommentag wurde gespeichert.", "OK");
                 }
             }
             catch (Exception ex)

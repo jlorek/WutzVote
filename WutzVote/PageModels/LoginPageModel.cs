@@ -5,6 +5,7 @@ using RestSharp;
 using Xamarin.Forms;
 using System.Linq;
 using System.Text;
+using Acr.Settings;
 
 namespace WutzVote
 {
@@ -50,8 +51,8 @@ namespace WutzVote
 
 		private void LoadLogin()
 		{
-			Username = Acr.Settings.Settings.Local.Get("Username", string.Empty);
-			Password = Acr.Settings.Settings.Local.Get("Password", string.Empty);
+			Username = CrossSettings.Current.Get("Username", string.Empty);
+			Password = CrossSettings.Current.Get("Password", string.Empty);
 		}
 
 		private async Task PromptSaveLogin()
@@ -74,14 +75,14 @@ namespace WutzVote
 		private bool LoginChanged()
 		{
 			return
-				(Username != Acr.Settings.Settings.Local.Get("Username", string.Empty) ||
-				 Password != Acr.Settings.Settings.Local.Get("Password", string.Empty));
+				(Username != CrossSettings.Current.Get("Username", string.Empty) ||
+				 Password != CrossSettings.Current.Get("Password", string.Empty));
 		}
 
 		private void SaveLogin()
 		{
-			Acr.Settings.Settings.Local.Set("Username", Username);
-			Acr.Settings.Settings.Local.Set("Password", Password);
+            CrossSettings.Current.Set("Username", Username);
+            CrossSettings.Current.Set("Password", Password);
 		}
 
 		private async Task<Festival> Login()
